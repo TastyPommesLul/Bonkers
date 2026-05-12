@@ -23,6 +23,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +38,6 @@ public class Bonkers {
 
         eventBus.addListener(this::addCreative);
         eventBus.addListener(this::gatherClientData);
-        eventBus.addListener(this::gatherServerData);
 
         ModItems.register(eventBus);
         ModBlocks.register(eventBus);
@@ -50,23 +50,14 @@ public class Bonkers {
         LOGGER.info("if u see this, why are u looking here?");
         LOGGER.info("if something went wrong, im sowwy :3");
     }
+
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(CreativeModeTabs.INGREDIENTS)) {
-            event.accept(ModItems.TEST_ITEM);
+            event.accept(ModItems.ASH.get());
         }
-    }
-
-    private void gatherServerData(GatherDataEvent.Server event) {
-        DataGenerator generator = event.getGenerator();
-        PackOutput output = generator.getPackOutput();
-        var lookupProvider = event.getLookupProvider();
-        generator.addProvider(true, new ModRecipeProvider.Runner(output, lookupProvider));
-        generator.addProvider(true, new ModTagsProviders.Blocks(output, lookupProvider));
-        generator.addProvider(true, new ModTagsProviders.Items(output, lookupProvider));
-
-        generator.addProvider(true, new LootTableProvider(output, Set.of(), List.of(
-                new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)
-        ), lookupProvider));
+        if (event.getTabKey().equals(CreativeModeTabs.FUNCTIONAL_BLOCKS)) {
+            event.accept(ModItems.ASH_BLOCK_ITEM.get());
+        }
     }
 
     public void gatherClientData(GatherDataEvent.Client event) {
@@ -75,5 +66,12 @@ public class Bonkers {
         var lookupProvider = event.getLookupProvider();
 
         generator.addProvider(true, new ModModelProvider(output));
+        generator.addProvider(true, new ModRecipeProvider.Runner(output, lookupProvider));
+        generator.addProvider(true, new ModTagsProviders.Blocks(output, lookupProvider));
+        generator.addProvider(true, new ModTagsProviders.Items(output, lookupProvider));
+
+        generator.addProvider(true, new LootTableProvider(output, Collections.emptySet(), List.of(
+                new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)
+        ), lookupProvider));
     }
 }
