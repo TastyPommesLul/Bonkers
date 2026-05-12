@@ -48,7 +48,8 @@ public class Bonkers {
 
 
     private void commonSetup(FMLCommonSetupEvent event) {
-
+        LOGGER.info("if u see this, why are u looking here?");
+        LOGGER.info("if something went wrong, im sowwy :3");
     }
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(CreativeModeTabs.INGREDIENTS)) {
