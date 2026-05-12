@@ -1,0 +1,13 @@
+{
+  "itemGroup.bonkers": "Example Mod Tab",
+  "block.bonkers.example_block": "Example Block",
+  "item.bonkers.example_item": "Example Item",
+
+  "bonkers.configuration.title": "Bonkers Configs",
+  "bonkers.configuration.section.bonkers.common.toml": "Bonkers Configs",
+  "bonkers.configuration.section.bonkers.common.toml.title": "Bonkers Configs",
+  "bonkers.configuration.items": "Item List",
+  "bonkers.configuration.logDirtBlock": "Log Dirt Block",
+  "bonkers.configuration.magicNumberIntroduction": "Magic Number Text",
+  "bonkers.configuration.magicNumber": "Magic Number"
+}
