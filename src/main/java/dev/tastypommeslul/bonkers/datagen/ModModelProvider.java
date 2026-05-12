@@ -1,5 +1,6 @@
 package dev.tastypommeslul.bonkers.datagen;
 
+import dev.tastypommeslul.bonkers.Bonkers;
 import dev.tastypommeslul.bonkers.item.ModItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -9,7 +10,7 @@ import net.minecraft.data.PackOutput;
 
 public class ModModelProvider extends ModelProvider {
     public ModModelProvider(PackOutput output) {
-        super(output);
+        super(output, Bonkers.MODID);
     }
 
     @Override

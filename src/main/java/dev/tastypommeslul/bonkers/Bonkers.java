@@ -6,40 +6,23 @@ import dev.tastypommeslul.bonkers.datagen.ModModelProvider;
 import dev.tastypommeslul.bonkers.datagen.ModRecipeProvider;
 import dev.tastypommeslul.bonkers.datagen.ModTagsProviders;
 import dev.tastypommeslul.bonkers.item.ModItems;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.neoforged.bus.api.Event;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.List;
 import java.util.Set;
@@ -51,9 +34,11 @@ public class Bonkers {
     public Bonkers(IEventBus eventBus, ModContainer modContainer) {
         eventBus.addListener(this::commonSetup);
 
-        NeoForge.EVENT_BUS.register(this);
+//        NeoForge.EVENT_BUS.register(this);
 
         eventBus.addListener(this::addCreative);
+        eventBus.addListener(this::gatherClientData);
+        eventBus.addListener(this::gatherServerData);
 
         ModItems.register(eventBus);
         ModBlocks.register(eventBus);
@@ -61,28 +46,34 @@ public class Bonkers {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
+
     private void commonSetup(FMLCommonSetupEvent event) {
 
     }
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-
+        if (event.getTabKey().equals(CreativeModeTabs.INGREDIENTS)) {
+            event.accept(ModItems.TEST_ITEM);
+        }
     }
 
+    private void gatherServerData(GatherDataEvent.Server event) {
+        DataGenerator generator = event.getGenerator();
+        PackOutput output = generator.getPackOutput();
+        var lookupProvider = event.getLookupProvider();
+        generator.addProvider(true, new ModRecipeProvider.Runner(output, lookupProvider));
+        generator.addProvider(true, new ModTagsProviders.Blocks(output, lookupProvider));
+        generator.addProvider(true, new ModTagsProviders.Items(output, lookupProvider));
 
-    @SubscribeEvent
-    public void gatherData(GatherDataEvent event) {
-        event.createProvider(ModModelProvider::new);
-        event.createProvider(ModRecipeProvider.Runner::new);
-        event.createProvider(ModTagsProviders.Blocks::new);
-        event.createProvider(ModTagsProviders.Items::new);
+        generator.addProvider(true, new LootTableProvider(output, Set.of(), List.of(
+                new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)
+        ), lookupProvider));
+    }
 
-        event.createProvider((output, lookupProvider) -> new LootTableProvider(
-                output, Set.of(), List.of(
-                        new LootTableProvider.SubProviderEntry(
-                                ModBlockLootTableProvider::new,
-                                LootContextParamSets.BLOCK
-                        )
-                ), lookupProvider
-        ));
+    public void gatherClientData(GatherDataEvent.Client event) {
+        DataGenerator generator = event.getGenerator();
+        PackOutput output = generator.getPackOutput();
+        var lookupProvider = event.getLookupProvider();
+
+        generator.addProvider(true, new ModModelProvider(output));
     }
 }
