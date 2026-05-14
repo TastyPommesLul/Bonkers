@@ -11,6 +11,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jspecify.annotations.NonNull;
 
 public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Bonkers.MODID);
@@ -18,7 +19,7 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> ASH_BLOCK = BLOCKS.registerBlock("ash_block", props -> new Block(props.sound(SoundType.GRAVEL)) {
         @Override
-        protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        protected @NonNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
             return Block.column(16, 0, 6);
         }
     });
