@@ -1,5 +1,6 @@
 package dev.tastypommeslul.bonkers;
 
+import com.mojang.logging.LogUtils;
 import dev.tastypommeslul.bonkers.block.ModBlocks;
 import dev.tastypommeslul.bonkers.datagen.ModBlockLootTableProvider;
 import dev.tastypommeslul.bonkers.datagen.ModModelProvider;
@@ -11,21 +12,17 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
-import org.slf4j.Logger;
-
-import com.mojang.logging.LogUtils;
-
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Mod(Bonkers.MODID)
 public class Bonkers {
