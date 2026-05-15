@@ -3,8 +3,6 @@
   "package": "dev.tastypommeslul.bonkers.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "MixinBlock",
-    "MixinFlintAndSteel"
   ],
   "injectors": {
     "defaultRequire": 1
