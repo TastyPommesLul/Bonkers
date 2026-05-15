@@ -3,10 +3,7 @@ package dev.tastypommeslul.bonkers;
 import com.mojang.logging.LogUtils;
 import dev.tastypommeslul.bonkers.block.ModBlocks;
 import dev.tastypommeslul.bonkers.block.custom.AshBlock;
-import dev.tastypommeslul.bonkers.datagen.ModBlockLootTableProvider;
-import dev.tastypommeslul.bonkers.datagen.ModModelProvider;
-import dev.tastypommeslul.bonkers.datagen.ModRecipeProvider;
-import dev.tastypommeslul.bonkers.datagen.ModTagsProviders;
+import dev.tastypommeslul.bonkers.datagen.*;
 import dev.tastypommeslul.bonkers.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.DataGenerator;
@@ -108,6 +105,7 @@ public class Bonkers {
         generator.addProvider(true, new ModRecipeProvider.Runner(output, lookupProvider));
         generator.addProvider(true, new ModTagsProviders.Blocks(output, lookupProvider));
         generator.addProvider(true, new ModTagsProviders.Items(output, lookupProvider));
+        generator.addProvider(true, new ModDataMapProvider(output, lookupProvider));
 
         generator.addProvider(true, new LootTableProvider(output, Collections.emptySet(), List.of(
                 new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)

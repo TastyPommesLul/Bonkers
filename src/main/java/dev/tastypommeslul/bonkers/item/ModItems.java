@@ -13,7 +13,7 @@ public class ModItems {
 
     public static final DeferredItem<Item> ASH = ITEMS.registerItem("ash", Item::new);
 
-    public static final DeferredItem<BlockItem> ASH_BLOCK_ITEM = ITEMS.registerItem("ash_block", props -> new BlockItem(ModBlocks.ASH_BLOCK.get(), props));
+    public static final DeferredItem<BlockItem> ASH_BLOCK_ITEM = ITEMS.registerItem("ash_block", props -> new BlockItem(ModBlocks.ASH_BLOCK.get(), props.useBlockDescriptionPrefix()));
 
 
     public static void register(IEventBus eventBus) {

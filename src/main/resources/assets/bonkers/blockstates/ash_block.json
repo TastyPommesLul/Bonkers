@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "level=quarter": { "model": "bonkers:block/ash_block_quarter" },
+    "level=half":    { "model": "bonkers:block/ash_block_half" },
+    "level=fourth":  { "model": "bonkers:block/ash_block_fourth" },
+    "level=full":    { "model": "bonkers:block/ash_block_full" }
+  }
+}

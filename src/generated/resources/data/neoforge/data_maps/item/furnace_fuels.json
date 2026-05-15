@@ -1,0 +1,10 @@
+{
+  "values": {
+    "bonkers:ash": {
+      "replace": true,
+      "value": {
+        "burn_time": 800
+      }
+    }
+  }
+}

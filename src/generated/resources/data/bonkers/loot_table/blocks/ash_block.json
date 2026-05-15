@@ -5,53 +5,82 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:alternatives",
-          "children": [
+          "type": "minecraft:item",
+          "functions": [
             {
-              "type": "minecraft:item",
+              "add": false,
               "conditions": [
                 {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
-                          }
-                        }
-                      ]
-                    }
+                  "block": "bonkers:ash_block",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "level": "quarter"
                   }
                 }
               ],
-              "name": "bonkers:ash_block"
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
             },
             {
-              "type": "minecraft:item",
-              "functions": [
+              "add": false,
+              "conditions": [
                 {
-                  "add": false,
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "max": 6.0,
-                    "min": 2.0
-                  },
-                  "function": "minecraft:set_count"
-                },
-                {
-                  "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:ore_drops",
-                  "function": "minecraft:apply_bonus"
-                },
-                {
-                  "function": "minecraft:explosion_decay"
+                  "block": "bonkers:ash_block",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "level": "half"
+                  }
                 }
               ],
-              "name": "bonkers:ash"
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 6.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "bonkers:ash_block",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "level": "fourth"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 12.0,
+                "min": 10.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "bonkers:ash_block",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "level": "full"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 16.0,
+                "min": 14.0
+              },
+              "function": "minecraft:set_count"
             }
-          ]
+          ],
+          "name": "bonkers:ash"
         }
       ],
       "rolls": 1.0
